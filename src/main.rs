@@ -1,11 +1,8 @@
 #![allow(unused)]
-
-
 use reqwest;
 use scraper::{Html, Selector, element_ref::Select};
 use serde::{Serialize};
 use std::{error::Error, fs::File, io::repeat};
-
 
 #[derive(Debug, Serialize)]
 struct GameCard {
