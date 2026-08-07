@@ -17,19 +17,15 @@ async fn main () -> Result<(), Box<dyn Error>> {
     let url = "https://www.vlr.gg/matches";
     let mut gcards: Vec<GameCard> = Vec::new();
     let response = reqwest::get(url).await?; 
-
     let html = response.text().await?;
     let document = Html::parse_document(&html);
 
     // Selecting CSS 
-
     let game_selector = Selector::parse(".match-item-vs-team").unwrap();
     let name_selector = Selector::parse(".match-item-vs-team-name").unwrap();
     let time_selector = Selector::parse(".match-item-time").unwrap();
     
     // Collect Scraped Data
-
-
      for gcard in document.select(&game_selector) {
 
         // Only Printing One Team Name at a time
@@ -51,7 +47,6 @@ async fn main () -> Result<(), Box<dyn Error>> {
         gcards.push(GameCard { team_names, match_time });
         
 }
-
     let x = gcards; 
     println!("{:?}", x );
 
