@@ -45,28 +45,17 @@ async fn main () -> Result<(), Box<dyn Error>> {
         .replace("\n", "");
         
         // Currently Not Printing FIX
-
         let match_time = gcard
         .select(&time_selector)
         .next()
         .map(|t| t.text().collect::<Vec<_>>().join(""))
         .unwrap_or_default();
        
-        
-
         gcards.push(GameCard { team_names, match_time });
         
-
 }
 
-
-    
-   
-
-    
-
     let x = gcards; 
-
     println!("{:?}", x );
 
     Ok(())
