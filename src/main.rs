@@ -55,9 +55,10 @@ async fn main () -> Result<(), Box<dyn Error>> {
     
    
 
+    // REDO THE SELECTORS ITS NOT STRUCTING / PRINTING RIGHT
 
-    let x = gcards;
-    println!("{:?}", x );
+    let x = gcards; 
+    // println!("{:?}", x );
 
     Ok(())
 
