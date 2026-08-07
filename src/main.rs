@@ -34,18 +34,18 @@ async fn main () -> Result<(), Box<dyn Error>> {
 
 
      for gcard in document.select(&game_selector) {
+
+        // Only Printing One Team Name at a time
         let team_names = gcard
         .select(&name_selector)
         .next()
-        
         .map(|t| t.text().collect::<Vec<_>>().join(""))
-
         .unwrap_or_default()
         .replace("\t", "")
         .replace("\n", "");
         
         // Currently Not Printing FIX
-        
+
         let match_time = gcard
         .select(&time_selector)
         .next()
