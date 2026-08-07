@@ -26,39 +26,48 @@ async fn main () -> Result<(), Box<dyn Error>> {
 
     // Selecting CSS 
 
-    let name_selector = Selector::parse(".text-of").unwrap();
+    let game_selector = Selector::parse(".match-item-vs-team").unwrap();
+    let name_selector = Selector::parse(".match-item-vs-team-name").unwrap();
     let time_selector = Selector::parse(".match-item-time").unwrap();
     
     // Collect Scraped Data
 
 
-     for gcard in document.select(&name_selector) {
+     for gcard in document.select(&game_selector) {
         let team_names = gcard
         .select(&name_selector)
         .next()
+        
         .map(|t| t.text().collect::<Vec<_>>().join(""))
-        .unwrap_or_default();
 
+        .unwrap_or_default()
+        .replace("\t", "")
+        .replace("\n", "");
+        
+        // Currently Not Printing FIX
+        
         let match_time = gcard
         .select(&time_selector)
         .next()
         .map(|t| t.text().collect::<Vec<_>>().join(""))
         .unwrap_or_default();
+       
         
-        // match_time.to_string();
 
         gcards.push(GameCard { team_names, match_time });
         
 
 }
 
+
     
    
 
-    // REDO THE SELECTORS ITS NOT STRUCTING / PRINTING RIGHT
+    
 
     let x = gcards; 
-    // println!("{:?}", x );
+
+    println!("{:?}", x );
 
     Ok(())
 
