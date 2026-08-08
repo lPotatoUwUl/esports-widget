@@ -1,14 +1,22 @@
+// PROBLEMS
+// ONLY GETS ONE TEAM NAME  [GameCard { team_names: "Team Secret0", teams: "" } when it should be 
+
 #![allow(unused)]
 use reqwest;
 use scraper::{Html, Selector, element_ref::Select};
 use serde::{Serialize};
 use std::{error::Error, fs::File, io::repeat};
 
+
 #[derive(Debug, Serialize)]
 struct GameCard {
-    team_names: String,
+    // team_names: String,
     match_time: String,
+    teams: String,
+
 }
+
+
 
 #[tokio::main]
 async fn main () -> Result<(), Box<dyn Error>> {
@@ -21,30 +29,42 @@ async fn main () -> Result<(), Box<dyn Error>> {
     let document = Html::parse_document(&html);
 
     // Selecting CSS 
-    let game_selector = Selector::parse(".match-item-vs-team").unwrap();
-    let name_selector = Selector::parse(".match-item-vs-team-name").unwrap();
+    let teams_selector =Selector::parse(".match-item-vs").unwrap();
+    // let game_selector = Selector::parse(".match-item-vs").unwrap();
+    let name_selector = Selector::parse(".match-item-vs-team").unwrap();
     let time_selector = Selector::parse(".match-item-time").unwrap();
     
     // Collect Scraped Data
-     for gcard in document.select(&game_selector) {
+     for gcard in document.select(&teams_selector) {
 
-        // Only Printing One Team Name at a time
-        let team_names = gcard
+        let teams = gcard
         .select(&name_selector)
-        .next()
-        .map(|t| t.text().collect::<Vec<_>>().join(""))
-        .unwrap_or_default()
+        .map(|t| t.text().collect::<String>().trim().to_string())
+        .collect::<Vec<_>>()
+        .join(" vs ")
         .replace("\t", "")
         .replace("\n", "");
+
+        // // Only Printing One Team Name at a time
+        // let team_names = gcard
+        // .select(&name_selector)
+        // .next()
+        // .map(|t| t.text().collect::<Vec<_>>().join(""))
+        // .unwrap_or_default()
+        // .replace("\t", "")
+        // .replace("\n", "");
         
         // Currently Not Printing FIX
         let match_time = gcard
         .select(&time_selector)
         .next()
         .map(|t| t.text().collect::<Vec<_>>().join(""))
-        .unwrap_or_default();
+        .unwrap_or_default()
+        .replace("\t", "")
+        .replace("\n", "");
        
-        gcards.push(GameCard { team_names, match_time });
+        gcards.push(GameCard { teams , match_time, });
+        // gcards.push(GameCard { teams , team_names, match_time, });
         
 }
     let x = gcards; 
