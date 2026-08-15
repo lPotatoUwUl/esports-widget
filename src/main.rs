@@ -24,33 +24,6 @@ struct GameCard {
     fetchboth();
 }
 
-
-//     let url = "https://www.vlr.gg/matches";
-//     let mut date_ofs: Vec<DateOf> = Vec::new();
-    
-//     let response = reqwest::get(url).await?; 
-//     let html = response.text().await?;
-//     let document = Html::parse_document(&html);
-    
-//     let date_selector =Selector::parse(".wf-label.mod-large").unwrap();
-
-//     for date_of in document.select(&date_selector) {
-//     let match_date = date_of
-//         .text()
-//         .collect::<String>()
-//         .trim()
-//         .to_string()
-//         .replace("\t", "")
-//         .replace("\n", "");
-//         date_ofs.push(DateOf { match_date });
-//     }
-
-//     let y = date_ofs;
-//     println!("{:?}", y);
-
-//    Ok(()) 
-// }
-
 #[tokio::main]
 async fn fetchboth () -> Result<(), Box<dyn Error>> {
 
